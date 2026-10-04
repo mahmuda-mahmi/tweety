@@ -4,5 +4,5 @@ use App\Http\Controllers\TweetController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [TweetController::class, 'index']);
-
+Route::post('/tweets', [TweetController::class, 'store']);
 // Route::get('/tweets', [TweetsController::class, 'index'] -> name('tweets.index')  );

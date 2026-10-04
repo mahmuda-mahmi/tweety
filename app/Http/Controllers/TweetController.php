@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Tweet;
 use Illuminate\Http\Request;
 
 class TweetController extends Controller
@@ -11,23 +12,10 @@ class TweetController extends Controller
      */
     public function index()
     {
-        $tweets = [
-            [
-                'author' => 'Alice Johnson',
-                'message' => 'Working on something cool with Chirper ... ',
-                'time' => '3 hours ago'
-            ],
-            [
-                'author' => 'Bob Smith',
-                'message' => 'Just finished a great workout! Feeling energized.',
-                'time' => '5 hours ago'
-            ],
-            [
-                'author' => 'Charlie Brown',
-                'message' => 'Excited to announce my new project! Stay tuned for updates.',
-                'time' => '1 day ago'
-            ]
-        ];
+        $tweets = Tweet::with('user')
+        ->latest()
+        ->take(50)
+        ->get();
         return view('home', ['tweets' => $tweets]);
     }
 
@@ -44,7 +32,15 @@ class TweetController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'message' => 'required|string|max:255|min:8',
+        ]);
+
+        Tweet::create([
+            'message' => $validated['message'],
+        ]);
+
+        return redirect('/')->with('success', 'Tweet created successfully.');
     }
 
     /**

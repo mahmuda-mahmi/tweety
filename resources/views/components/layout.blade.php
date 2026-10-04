@@ -11,7 +11,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
 
-<body class="h-dvh flex flex-col ">
+<body class="h-dvh flex flex-col">
     <div>
         <div class="navbar bg-base-100 shadow-sm w-3/4 mx-auto rounded-b-lg mt-2">
             <div class="navbar-start">
@@ -35,12 +35,12 @@
                 </ul>
             </div>
             <div class="navbar-end gap-3">
-                <a class="btn btn-success">Login</a>
-                <a class="btn btn-outline">Sign </a>
+                <a class="btn btn-success">Log In</a>
+                <a class="btn btn-outline">Sign Up</a>
             </div>
         </div>
     </div>
-    <main class="flex-1 w-3/4 mx-auto mt-2 min-h-screen" >
+    <main class="flex-1 w-full max-w-6xl mx-auto mt-2">
         {{ $slot }}
     </main>
     <footer class="footer sm:footer-horizontal footer-center bg-base-300 text-base-content p-4">

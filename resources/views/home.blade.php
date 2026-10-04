@@ -1,21 +1,37 @@
 <x-layout>
-    <div class="flex flex-col gap-4">
-        @foreach($tweets as $tweet)
-            <div class="card w-3/4 bg-base-100 shadow-sm mx-auto mt-4 gap-4">
-                <div class="card-body">
-                    <div class="justify-between">
-                        <h2 class="text-3xl font-bold mb-4">{{ $tweet['author'] }}</h2>
-                        <p class="text-md">{{ $tweet['message'] }}</p>
-                        <p class="text-sm text-gray-500">{{ $tweet['time'] }}</p>
+    {{-- @if ($errors->any())
+        {{ dd($errors->all()) }}
+    @endif --}}
+    <div>
+        <div class="card bg-base-100 w-3/4 mx-auto mt-6 shadow-sm">
+            <div class="card-body">
+                <h2 class="card-title">Create a Tweet</h2>
+                <form action="/tweets" method="POST">
+                    @csrf
+                    <div class="form-control">
+                        <textarea name="message" placeholder="What's happening?" class="textarea textarea-bordered w-full @error('message') textarea-error @enderror" rows="4">{{ old('message') }}</textarea>
+
+                        @error('message')
+                        <div class="label">
+                            <span class="text-red-500 text-sm mt-1">{{ $message }}</span>
+                        </div>
+                        @enderror
                     </div>
-                </div>
+                    <div class="card-actions justify-end mt-2">
+                        <button type="submit" class="btn btn-primary">Tweet</button>
+                    </div>
+                </form>
             </div>
-        @endforeach
-        {{-- <div class="card-body">
-            <div class="justify-between">
-                <h2 class="text-3xl font-bold mb-4">Premium</h2>
-                <p class="text-md">Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis aliquam quo obcaecati debitis recusandae totam culpa nisi voluptatibus inventore itaque harum, laboriosam voluptatem veniam ad? Qui error modi, commodi placeat blanditiis repudiandae distinctio impedit sapiente ad optio accusamus quibusdam eligendi illum? In sunt fuga soluta laboriosam fugit, iusto laudantium non!</p>
-            </div>
-        </div> --}}
+        </div>
+    </div>
+    
+    <div class="max-w-4xl mx-auto mt-6 grid grid-cols-1 gap-4">
+        <h1 class="text-2xl font-bold col-span-full">Recent Tweets</h1>
+
+        @forelse($tweets as $tweet)
+            <x-tweet :tweet="$tweet" />
+        @empty
+            <p class="text-center text-gray-500 mt-4 col-span-full">No tweets found.</p>
+        @endforelse
     </div>
 </x-layout>
